@@ -1,0 +1,36 @@
+{
+	"id": "4866aace-cd9b-c973-331b-eee5d24d6787",
+	"name": "urlparse",
+	"description": "",
+	"order": [
+		"9b76d9b4-7996-0bd1-8bca-5a839dbae384"
+	],
+	"folders": [],
+	"timestamp": 1474643717075,
+	"owner": "206270",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "9b76d9b4-7996-0bd1-8bca-5a839dbae384",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:9000/v1/urlparse",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "4866aace-cd9b-c973-331b-eee5d24d6787",
+			"data": [],
+			"dataMode": "raw",
+			"name": "localhost:9000/v1/urlparse",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1474643738851,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"url\": \"ftp://www.domain.com/23/89\"\n}"
+		}
+	]
+}

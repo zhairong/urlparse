@@ -1,0 +1,73 @@
+<configuration>
+    <jmxConfigurator/>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel"/>
+
+    <property
+            name="stdOutputPattern"
+            value="%date{ISO8601} %-5level [%X{client_id},%X{call_id}] %logger{16} - %msg%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${application.home:-.}/logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover with compression -->
+            <fileNamePattern>${LOGS_HOME}/server-log-%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- keep 1 week worth of history -->
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${stdOutputPattern}</pattern>
+            <!-- this quadruples logging throughput -->
+            <!--<immediateFlush>false</immediateFlush>-->
+        </encoder>
+    </appender>
+
+    <appender name="ACCESS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover with compression -->
+            <fileNamePattern>${LOGS_HOME}/access-log-%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- keep 1 week worth of history -->
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss ZZZZ} %message%n</pattern>
+            <!-- this quadruples logging throughput -->
+            <immediateFlush>false</immediateFlush>
+        </encoder>
+    </appender>
+
+    <logger name="access" level="INFO" additivity="false">
+        <appender-ref ref="ACCESS_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- loggers for packages -->
+    <logger name="Client" level="DEBUG"/>
+    <logger name="common" level="DEBUG"/>
+    <logger name="connector" level="DEBUG"/>
+    <logger name="controllers" level="DEBUG"/>
+    <logger name="utils" level="DEBUG"/>
+
+    <logger name="LoggingFilter" level="DEBUG"/>
+    <logger name="RequestLog" level="DEBUG"/>
+    <logger name="application" level="DEBUG"/>
+    <logger name="play" level="INFO"/>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <!--<appender-ref ref="ELK" />-->
+    </root>
+
+</configuration>
